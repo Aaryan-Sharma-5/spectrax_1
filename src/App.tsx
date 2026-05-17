@@ -13,6 +13,7 @@ import { exercises, ExerciseConfig } from "./config/exercises";
 import { BodyType } from "./services/bodyTypeEngine";
 import { useTheme } from "./context/ThemeContext";
 import { useAuth } from "./context/AuthContext";
+import { initializeAutoSync } from "./services/workoutSyncService";
 import HistoryPage from "./HistoryPage";
 import "./styles/auth.css";
 import "./styles/app.css";
@@ -77,6 +78,14 @@ function App() {
       setCurrentScreen("welcome");
     }
   }, [user]);
+
+  // Initialize auto-sync when user logs in
+  useEffect(() => {
+    if (user?.uid) {
+      console.log("🔄 Initializing auto-sync for user:", user.uid);
+      initializeAutoSync(user.uid);
+    }
+  }, [user?.uid]);
 
   const handleWorkoutEnd = (
     finalStats: Omit<WorkoutStats, "exerciseName"> & { tags?: string[] },
