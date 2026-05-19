@@ -398,15 +398,6 @@ export const Replay3DModel: React.FC<Replay3DModelProps> = ({
         if (bones.spine && bones.spine1) recordRest("spine", "spine1");
         if (bones.neck && bones.head) recordRest("neck", "head");
 
-        recordRest("leftShoulder", "leftElbow");
-        recordRest("leftElbow", "leftWrist");
-        recordRest("rightShoulder", "rightElbow");
-        recordRest("rightElbow", "rightWrist");
-        recordRest("leftHip", "leftKnee");
-        recordRest("leftKnee", "leftAnkle");
-        recordRest("rightHip", "rightKnee");
-        recordRest("rightKnee", "rightAnkle");
-
         setModelLoaded(true);
 
         // Hide fallback
@@ -636,9 +627,6 @@ export const Replay3DModel: React.FC<Replay3DModelProps> = ({
         applyPose("rightHip", 24, 26);
         applyPose("rightKnee", 26, 28);
         applyPose("rightAnkle", 28, 30);
-        applyPose("leftKnee", 25, 27);
-        applyPose("rightHip", 24, 26);
-        applyPose("rightKnee", 26, 28);
 
         // --- 3D to 2D HUD Projection ---
         const newLabels: any[] = [];
@@ -684,9 +672,6 @@ export const Replay3DModel: React.FC<Replay3DModelProps> = ({
         projectJoint(24, "rightHip", "R HIP", 12, 24, 26);
 
         setHudLabels(newLabels);
-        applyPose("leftKnee", 25, 27);
-        applyPose("rightHip", 24, 26);
-        applyPose("rightKnee", 26, 28);
 
         // Error Highlight logic for GLTF model
         skinnedMeshesRef.current.forEach((mesh) => {

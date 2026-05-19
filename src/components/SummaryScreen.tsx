@@ -1,5 +1,6 @@
     import React, { useEffect, useState } from 'react';
     import { Award, Clock, RotateCcw, Video, Activity } from 'lucide-react';
+    import { useWorkoutSync } from "../hooks/useWorkoutSync";
     
     interface SummaryScreenProps {
       stats: { 
@@ -17,8 +18,7 @@
       onRestart: () => void;
       onViewReplay: () => void;
     }
-    import { useWorkoutSync } from "../hooks/useWorkoutSync";
-    
+
     export const SummaryScreen: React.FC<SummaryScreenProps> = ({ stats, onRestart, onViewReplay }) => {
       const [accuracy, setAccuracy] = useState(0);
       const [isSavingWorkout, setIsSavingWorkout] = useState(false);

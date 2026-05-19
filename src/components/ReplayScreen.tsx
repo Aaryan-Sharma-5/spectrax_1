@@ -241,11 +241,11 @@ export const ReplayScreen: React.FC<ReplayScreenProps> = ({ onBack, stats }) => 
                 fill="none"
                 stroke="#00ffff"
                 strokeWidth="2"
-                points={angleHistory.map(d => {
-                  const first = angleHistory[0].frame;
-                  const last = angleHistory[angleHistory.length - 1].frame || first;
-                  const x = ((d.frame - first) / (last - first)) * 240;
-                  const y = 80 - (d.knee / 180) * 80; // plot knee angle as example
+                points={angleHistory.map((d, i) => {
+                  // Use array index for x-axis to avoid division-by-zero when all
+                  // entries share the same frame value (e.g. paused on same frame).
+                  const x = (i / Math.max(1, angleHistory.length - 1)) * 240;
+                  const y = 80 - (d.knee / 180) * 80;
                   return `${x},${y}`;
                 }).join(' ')}
               />
