@@ -1,8 +1,7 @@
-import type {
-  NormalizedLandmarkList,
-  Pose as PoseType,
-  Results,
-} from '@mediapipe/pose';
+import type { Pose as PoseType, Results } from '@mediapipe/pose';
+
+const Pose = (window as any).Pose as typeof PoseType;
+
 
 /**
  * poseService.ts
@@ -311,8 +310,7 @@ export class PoseService {
   onResults(callback: (results: Results) => void) {
     if (!this.pose) return;
 
-    this.resetSmoothingFilters();
-    this.pose.onResults((results: Results) => {
+    this.pose.onResults((results: any) => {
       this.inProgress = false;
       this.errorCount = 0;
 
