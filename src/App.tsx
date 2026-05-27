@@ -28,6 +28,7 @@ import { estimateCalories, getSavedUserWeight } from "./utils/calorieEstimator";
 import { CursorGlow } from "./components/CursorGlow";
 import { FitnessCalculator } from "./components/FitnessCalculator";
 import React from "react";
+import { PageErrorBoundary } from "./components/PageErrorBoundary";
 
 type Screen =
   | "welcome"
@@ -40,12 +41,13 @@ type Screen =
   | "signup"
   | "forgot-password"
   | "trophy"
-  | "profile";
+  | "profile"
+  | "fitness";
 
 type ScreenTransitionMap = Record<Screen, readonly Screen[]>;
 
 const SCREEN_TRANSITIONS: ScreenTransitionMap = {
-  welcome: ["calibration", "history", "trophy", "profile", "login"],
+  welcome: ["calibration", "history", "trophy", "profile", "login", "fitness"],
   calibration: ["workout", "welcome", "login"],
   workout: ["summary", "welcome"],
   summary: ["replay", "welcome"],
@@ -56,6 +58,7 @@ const SCREEN_TRANSITIONS: ScreenTransitionMap = {
   "forgot-password": ["login", "welcome"],
   trophy: ["welcome", "login"],
   profile: ["welcome", "login"],
+  fitness: ["welcome"],
 };
 
 const canTransitionTo = (from: Screen, to: Screen) => {
@@ -374,11 +377,15 @@ function App() {
         )}
 
         {currentScreen === "history" && (
-          <HistoryPage onBack={() => navigateTo("welcome")} />
+          <PageErrorBoundary fallbackMessage="Failed to load workout history. Please try again.">
+            <HistoryPage onBack={() => navigateTo("welcome")} />
+          </PageErrorBoundary>
         )}
 
         {currentScreen === "trophy" && (
-          <TrophyRoom onBack={() => navigateTo("welcome")} />
+          <PageErrorBoundary fallbackMessage="Failed to load Trophy Room. Please try again.">
+            <TrophyRoom onBack={() => navigateTo("welcome")} />
+          </PageErrorBoundary>
         )}
 
         {currentScreen === "profile" && (
